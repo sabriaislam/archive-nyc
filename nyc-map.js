@@ -164,5 +164,4 @@ const PLACES = [
     "images": ['images/fei-long.png'],
     "audio_clips": ['memos/Helen.mp3']
   } 
-
 ];
