@@ -113,7 +113,7 @@ const PLACES = [
     "id": 11,
     "title": "Burger Garage",
     "address": "25-36 Jackson Ave, Long Island City, NY 11101",
-    "description": "- got my first sponsorship for my largest fundraising campaign...\n- ate burgers every day...",
+    "description": "got my first sponsorship for my largest fundraising campaign, and ate like burgers every day",
     "name": "Brandon",
     "lat": 40.7449,
     "lng": -73.9475,
@@ -139,7 +139,7 @@ const PLACES = [
     "name": "Oscar de los Santos",
     "lat": 40.7741,
     "lng": -73.9099,
-    "images": ['images/pizza-palace.png'],
+    "images": [],
     "audio_clips": []
   },
   {
