@@ -7,7 +7,7 @@ const PLACES = [
     "name": "Abed Islam",
     "lat": 40.7595,
     "lng": -73.9170,
-    "images": [],
+    "images": ['images/steinway.png'],
     "audio_clips": []
   },
   {
@@ -18,7 +18,7 @@ const PLACES = [
     "name": "Kima Radoncic",
     "lat": 40.7739,
     "lng": -73.9085,
-    "images": [],
+    "images": ['images/yogurt.png'],
     "audio_clips": []
   },
   {
@@ -29,7 +29,7 @@ const PLACES = [
     "name": "Arundhuty Mondal",
     "lat": 40.7619,
     "lng": -73.9275,
-    "images": ['/images/fatimas.png'],
+    "images": ['images/fatimas.png'],
     "audio_clips": ['memos/Arundhuty.mp3']
   },
   {
@@ -40,7 +40,7 @@ const PLACES = [
     "name": "Farabi Azad",
     "lat": 40.7741,
     "lng": -73.9099,
-    "images": ['/images/pizza-palace.png'],
+    "images": ['images/pizza-palace.png'],
     "audio_clips": ['memos/Farabi.mp3']
   },
   {
@@ -51,7 +51,7 @@ const PLACES = [
     "name": "Maisha Sarker",
     "lat": 40.7613,
     "lng": -73.9233,
-    "images": ['/images/vanilla-sky.png'],
+    "images": ['images/vanilla-sky.png'],
     "audio_clips": []
   },
   {
@@ -62,7 +62,7 @@ const PLACES = [
     "name": "Afsana Ahmed",
     "lat": 40.7640,
     "lng": -73.9287,
-    "images": ['/images/homemark99.png'],
+    "images": ['images/homemark99.png'],
     "audio_clips": []
   },
   {
@@ -73,7 +73,7 @@ const PLACES = [
     "name": "Shahriar Huda",
     "lat": 40.7107,
     "lng": -73.7931,
-    "images": ['/images/yummys.png'],
+    "images": ['images/yummys.png'],
     "audio_clips": ['memos/Siam.mp3']
   },
   {
@@ -84,7 +84,7 @@ const PLACES = [
     "name": "Jafreen Khan",
     "lat": 40.7449,
     "lng": -73.9475,
-    "images": ['/images/burger-garage.png'],
+    "images": ['images/burger-garage.png'],
     "audio_clips": []
   },
   {
@@ -95,7 +95,7 @@ const PLACES = [
     "name": "Charlene Chow",
     "lat": 40.6089,
     "lng": -73.9847,
-    "images": ['/images/mini-mall.png'],
+    "images": ['images/mini-mall.png'],
     "audio_clips": []
   },
   {
@@ -106,7 +106,7 @@ const PLACES = [
     "name": "Anonymous",
     "lat": 40.7493,
     "lng": -73.8923,
-    "images": ['/images/pizza-boy.png'],
+    "images": ['images/pizza-boy.png'],
     "audio_clips": []
   },
   {
@@ -117,7 +117,7 @@ const PLACES = [
     "name": "Brandon",
     "lat": 40.7449,
     "lng": -73.9475,
-    "images": ['/images/burger-garage.png'],
+    "images": ['images/burger-garage.png'],
     "audio_clips": []
   },
   {
@@ -128,7 +128,7 @@ const PLACES = [
     "name": "Helen",
     "lat": 40.6054,
     "lng": -73.9974,
-    "images": ['/images/brilliant-minds.png'],
+    "images": ['images/brilliant-minds.png'],
     "audio_clips": []
   },
   {
@@ -139,7 +139,7 @@ const PLACES = [
     "name": "Oscar de los Santos",
     "lat": 40.7741,
     "lng": -73.9099,
-    "images": ['/images/pizza-palace.png'],
+    "images": ['images/pizza-palace.png'],
     "audio_clips": []
   },
   {
@@ -150,7 +150,7 @@ const PLACES = [
     "name": "Fabiha Chowdhury",
     "lat": 40.775114,
     "lng": -73.912038,
-    "images": ['/images/gamestop.png'],
+    "images": ['images/gamestop.png'],
     "audio_clips": ['memos/Fabiha.mp3']
   },
   {
@@ -161,7 +161,7 @@ const PLACES = [
     "name": "Helen",
     "lat": 40.6367,
     "lng": -74.0098,
-    "images": ['/images/fei-long.png'],
+    "images": ['images/fei-long.png'],
     "audio_clips": ['memos/Helen.mp3']
   } 
 
