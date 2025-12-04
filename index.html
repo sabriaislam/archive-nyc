@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Archive of NYC – Interactive Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, sans-serif;
+    }
+
+    #map {
+      height: 100%;
+      width: 70%;
+      float: left;
+    }
+
+    #sidebar {
+      width: 30%;
+      float: right;
+      height: 100%;
+      overflow-y: auto;
+      padding: 1rem;
+      border-left: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .place-thumb {
+      width: 100%;
+      max-height: 150px;
+      object-fit: cover;
+      margin-top: 0.5rem;
+      border-radius: 4px;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .place-meta {
+      font-size: 0.75rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <div id="sidebar">
+    <h2>Archive of NYC</h2>
+    <p id="sidebar-intro">Click a marker on the map to view its stories.</p>
+    <div id="place-detail"></div>
+  </div>
+
+  <!-- Load PLACES data -->
+  <script src="nyc-map.js"></script>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    const bounds = [];
+
+    // -------------------------
+    // CUSTOM MARKER COLORS
+    // -------------------------
+    const blueIcon = new L.Icon({
+      iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
+      shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    const orangeIcon = new L.Icon({
+      iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png",
+      shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    // -------------------------
+    // GROUP PLACES BY LOCATION
+    // -------------------------
+    function groupPlacesByLocation(places) {
+      const groups = {};
+      places.forEach(p => {
+        const key = `${p.lat},${p.lng}`;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(p);
+      });
+      return groups;
+    }
+
+    // -------------------------
+    // SHOW MULTIPLE PLACES IN SIDEBAR
+    // -------------------------
+    function showMultiplePlaces(group) {
+      const container = document.getElementById("place-detail");
+      const intro = document.getElementById("sidebar-intro");
+      if (intro) intro.style.display = "none";
+
+      container.innerHTML = group.map(place => {
+        let imgHtml = "";
+        if (place.images && place.images.length > 0) {
+          imgHtml = `<img class="place-thumb" src="${place.images[0]}" alt="${place.title}">`;
+        }
+
+        let audioHtml = "";
+        if (place.audio_clips && place.audio_clips.length > 0) {
+          audioHtml = `
+            <audio controls>
+              <source src="${place.audio_clips[0]}" type="audio/mpeg">
+            </audio>
+          `;
+        }
+
+        return `
+          <h3>${place.title}</h3>
+          <p>${place.description || ""}</p>
+          ${imgHtml}
+          ${audioHtml}
+          <div class="place-meta">
+            <strong>By:</strong> ${place.name || "Anonymous"}<br>
+            <strong>Address:</strong> ${place.address}
+          </div>
+          <hr>
+        `;
+      }).join("");
+    }
+
+    // -------------------------
+    // INIT MAP
+    // -------------------------
+    const map = L.map('map').setView([40.73, -73.93], 11);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+
+    // -------------------------
+    // ADD MARKERS
+    // -------------------------
+    function addMarkers() {
+      const grouped = groupPlacesByLocation(PLACES);
+
+      Object.values(grouped).forEach(group => {
+        const first = group[0];
+        const { lat, lng } = first;
+
+        // Check if ANY entry in this location has audio
+        const hasAudio = group.some(p => p.audio_clips && p.audio_clips.length > 0);
+
+        const iconToUse = hasAudio ? orangeIcon : blueIcon;
+
+        const marker = L.marker([lat, lng], { icon: iconToUse }).addTo(map);
+
+        // Build popup (stacked)
+        let popupHtml = group.map(place => {
+          let imgHtml = "";
+          if (place.images && place.images.length > 0) {
+            imgHtml = `<br><img src="${place.images[0]}" style="width:100%; max-height:150px; object-fit:cover; margin-top:0.5rem; border-radius:4px;">`;
+          }
+
+          let audioHtml = "";
+          if (place.audio_clips && place.audio_clips.length > 0) {
+            audioHtml = place.audio_clips.map(src => `
+              <audio controls style="width:100%; margin-top:0.5rem;">
+                <source src="${src}" type="audio/mpeg">
+              </audio>
+            `).join("");
+          }
+
+          return `
+            <strong>${place.title}</strong><br>
+            ${place.description || ""}<br>
+            <em>— ${place.name || "Anonymous"}</em><br>
+            <small>${place.address}</small>
+            ${imgHtml}
+            ${audioHtml}
+            <hr>
+          `;
+        }).join("");
+
+        marker.bindPopup(popupHtml);
+
+        // Sidebar click
+        marker.on("click", () => showMultiplePlaces(group));
+
+        bounds.push([lat, lng]);
+      });
+
+      if (bounds.length > 0) {
+        map.fitBounds(bounds, { padding: [30, 30] });
+      }
+    }
+
+    addMarkers();
+  </script>
+</body>
+</html>
